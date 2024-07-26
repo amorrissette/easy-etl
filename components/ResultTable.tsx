@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import {
     Table,
@@ -28,14 +28,18 @@ export default function ResultTable({ csvData }: DataTableProps) {
   const [editingHeaderIndex, setEditingHeaderIndex] = useState<number | null>(null);
   const [headersEdited, setHeadersEdited] = useState(false);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [progress, setProgress] = React.useState(10);
   const [reTransformTrigger, setReTransformTrigger] = useState(0);
+  const hasRunEffectRef = useRef(false);
 
   useEffect(() => {
+    if (hasRunEffectRef.current || !csvData) {
+      return
+    }
     async function fetchResult() {
       try {
-        console.log(headers)
+        setLoading(true);
         const response = await fetch('/api/transform', {
           method: 'POST',
           headers: {
@@ -62,10 +66,14 @@ export default function ResultTable({ csvData }: DataTableProps) {
         setLoading(false);
       }
     }
-    if (csvData) {
-      fetchResult();
-    }
+    hasRunEffectRef.current = true;
+    fetchResult();
+  }, [csvData, reTransformTrigger]);
 
+  useEffect(() => {
+    if (!loading) {
+      return;
+    }
     // Example to simulate progress increase
     const timer = setInterval(() => {
       setProgress((prevProgress) => (prevProgress >= 100 ? 100 : prevProgress * 0.95 + 5));
@@ -74,15 +82,8 @@ export default function ResultTable({ csvData }: DataTableProps) {
     return () => {
       clearInterval(timer);
     };
-
-  }, [csvData, reTransformTrigger]);
-
-  //   if (resultData) {
-  //     const result = csvToJson(resultData);
-  //     setJsonArray(result);
-  //     setHeaders(result.length > 0 ? Object.keys(result[0]) : []);
-  //   }
-  // }, [resultData]);
+  }, [loading]);
+  
 
   const csvToJson = (csv: string): JsonObject[] => {
     const lines = csv.split("\n");
@@ -158,14 +159,15 @@ export default function ResultTable({ csvData }: DataTableProps) {
   const handleReTransform = () => {
     setLoading(true);
     setProgress(10);
+    hasRunEffectRef.current = false;
     setReTransformTrigger((prev) => prev + 1);
   };
 
   if (loading) {
     return (
-      <div className="flex w-full items-center gap-2 pt-6 pb-6 text-lg">
+      <div className="w-full items-center justify-center gap-2 pt-6 pb-6 text-lg">
         <div>Analyzing data...</div>
-        <Progress value={progress} className="w-[50%]" />
+        <Progress value={progress} className="w-[100%]" />
       </div>
     );
   }

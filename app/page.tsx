@@ -5,11 +5,14 @@ import Dropzone from '../components/Dropzone';
 import DataTable from '../components/Datatable';
 import ResultTable from '../components/ResultTable';
 import Examples from '../components/Examples';
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ChevronsUpDown } from 'lucide-react';
 
 export default function Home() {
   const [csvData, setCsvData] = useState('');
+  const [showOrigData, setShowOrigData] = useState(false);
 
   const handleClearData = () => {
     setCsvData('');
@@ -42,8 +45,29 @@ export default function Home() {
       </div>
 
       <div className="w-full pt-8">
-        
+        {csvData && <ResultTable csvData={csvData} />}
         {csvData && <div className="flex justify-center">
+          <Collapsible
+            open={showOrigData}
+            onOpenChange={setShowOrigData}
+            className="w-[350px] space-y-2"
+          >
+            <div className="flex items-center justify-center pt-4">
+              <h4 className="text-md font-semibold font-mono">
+                Show Original Data
+              </h4>
+              <CollapsibleTrigger asChild>
+                <button className="w-3 p-2">
+                  <ChevronsUpDown className="h-4 w-4" />
+                </button>
+              </CollapsibleTrigger>
+            </div>
+            <CollapsibleContent>
+              <DataTable csvData={csvData} />
+            </CollapsibleContent>
+          </Collapsible>
+        </div>}
+        {/* {csvData && <div className="flex justify-center">
           <Tabs defaultValue="transform" className="w-full">
             <TabsList>
               <TabsTrigger value="orig">Original</TabsTrigger>
@@ -52,7 +76,7 @@ export default function Home() {
             <TabsContent value="orig"><DataTable csvData={csvData} /></TabsContent>
             <TabsContent value="transform"><ResultTable csvData={csvData} /></TabsContent>
           </Tabs>
-        </div>}
+        </div>} */}
 
         {!csvData && <Examples onCsvData={setCsvData} />}
         
