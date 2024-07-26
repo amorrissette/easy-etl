@@ -1,6 +1,6 @@
 // dataTransformer.ts
 
-import { openai } from '@ai-sdk/openai';
+import { createOpenAI as createGroq } from '@ai-sdk/openai';
 import { JSONParseError, TypeValidationError, generateObject } from 'ai';
 import { z } from 'zod';
 
@@ -18,10 +18,12 @@ export async function transformData(csvData: string, reqHeaders: string): Promis
   | { type: 'unknown-error'; error: unknown }
 > {
   try {
-    console.log(csvData)
-    console.log(reqHeaders)
+    const groq = createGroq({
+      baseURL: 'https://api.groq.com/openai/v1',
+      apiKey: process.env.GROQ_API_KEY,
+    });
     const result = await generateObject({
-      model: openai('gpt-4o-mini'),
+      model: groq('llama-3.1-70b-versatile'), // openai('gpt-4o-mini'),
       schema: tableSchema,
       prompt: `Thoroughly analyze the CSV Data included below 
       and determine the most important data transformations to 

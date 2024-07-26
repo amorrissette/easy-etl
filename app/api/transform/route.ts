@@ -1,4 +1,5 @@
 // /api/transform.ts
+export const maxDuration = 30; // This function can run for a maximum of 30 seconds
 
 import { NextRequest, NextResponse } from 'next/server';
 import { transformData } from '../../../components/dataTransformer';

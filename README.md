@@ -6,7 +6,7 @@
 
 Easy ETL is a basic proof-of-concept AI app that attempts to "Extract, Transform, and Load" user provided data in an automated + repeatable way.
 
-Currently built using [Next.js](https://nextjs.org/), [OpenAI](https://sdk.vercel.ai/providers/ai-sdk-providers/openai), and deployed on [Vercel](https://vercel.com/docs). [Shadcn/ui](https://ui.shadcn.com/) is used for easy, clean UI components. 
+Currently built using [Next.js](https://nextjs.org/), [Groq](https://sdk.vercel.ai/providers/ai-sdk-providers/groq), and deployed on [Vercel](https://vercel.com/docs). [Shadcn/ui](https://ui.shadcn.com/) is used for easy, clean UI components. 
 
 <a>
     <img alt="Easy ETL - Instantly build ETL pipelines to transform your csv for downstream tasks or analysis" src="/public/easy-etl.png">
