@@ -27,6 +27,7 @@ export default function ResultTable({ csvData }: DataTableProps) {
   const [headers, setHeaders] = useState<string[]>([]);
   const [editingHeaderIndex, setEditingHeaderIndex] = useState<number | null>(null);
   const [headersEdited, setHeadersEdited] = useState(false);
+  const [visibleRows, setVisibleRows] = useState(10);
 
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = React.useState(10);
@@ -83,34 +84,12 @@ export default function ResultTable({ csvData }: DataTableProps) {
       clearInterval(timer);
     };
   }, [loading]);
-  
-
-  const csvToJson = (csv: string): JsonObject[] => {
-    const lines = csv.split("\n");
-    const result = [];
-    const headers = lines[0].split(",");
-
-    for (let i = 1; i < lines.length; i++) {
-      const obj: JsonObject = {};
-      const currentline = lines[i].split(",");
-
-      for (let j = 0; j < headers.length; j++) {
-        obj[headers[j]] = currentline[j];
-      }
-
-      result.push(obj);
-    }
-
-    return result;
-  };
 
   const handleHeaderChange = (index: number, newHeader: string) => {
     const updatedHeaders = [...headers];
     updatedHeaders[index] = newHeader;
     setHeaders(updatedHeaders);
     setHeadersEdited(true);
-    console.log('edited header')
-    console.log(headers)
   };
   
   const saveHeader = () => {
@@ -137,6 +116,10 @@ export default function ResultTable({ csvData }: DataTableProps) {
       return rest;
     });
     setJsonArray(updatedJsonArray);
+  };
+
+  const showMoreRows = () => {
+    setVisibleRows(visibleRows + 10);
   };
 
   const saveAsCsv = () => {
@@ -213,7 +196,7 @@ export default function ResultTable({ csvData }: DataTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {jsonArray.slice(0, 10).map((row, rowIndex) => (
+            {jsonArray.slice(0, visibleRows).map((row, rowIndex) => (
               <TableRow key={rowIndex}>
                 {Object.values(row).map((cell, cellIndex) => (
                   <TableCell key={cellIndex}>{cell}</TableCell>
@@ -221,6 +204,13 @@ export default function ResultTable({ csvData }: DataTableProps) {
               </TableRow>
             ))}
           </TableBody>
+          <TableCaption>
+            {visibleRows < jsonArray.length && (
+              <button onClick={showMoreRows} className="mt-4 flex items-center justify-center p-2 border border-gray-300 rounded">
+                Show More Rows
+              </button>
+            )}
+          </TableCaption>
         </Table>
       {/* </div> */}
 
