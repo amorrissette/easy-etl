@@ -36,12 +36,16 @@ export default function Home() {
         Easy ETL : Instantly build ETL pipelines to transform your csv for downstream analysis + tasks
       </p>
 
-      {(!csvData && <p className="flex w-full items-center justify-center font-mono text-lg pt-4 pb-2">
+      {(!csvData && <p className="flex w-full items-center justify-center font-mono text-lg pt-2 pb-2">
         Upload a spreadsheet file below and Easy ETL will process it for you.
       </p>)}
 
       <div className="pt-8">
         {!csvData && <Dropzone onCsvData={setCsvData} />}
+      </div>
+
+      <div className="w-full items-center justify-center font-mono text-md pt-2 pb-2">
+        AI inference is currently supported by <a href="https://groq.com/" target="_blank" rel="noopener noreferrer">Groq</a>. Easy ETL and Groq do not store any user data - <a href="https://groq.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Learn more.</a>
       </div>
 
       <div className="w-full pt-8">
@@ -67,16 +71,6 @@ export default function Home() {
             </CollapsibleContent>
           </Collapsible>
         </div>}
-        {/* {csvData && <div className="flex justify-center">
-          <Tabs defaultValue="transform" className="w-full">
-            <TabsList>
-              <TabsTrigger value="orig">Original</TabsTrigger>
-              <TabsTrigger value="transform">Transformed</TabsTrigger>
-            </TabsList>
-            <TabsContent value="orig"><DataTable csvData={csvData} /></TabsContent>
-            <TabsContent value="transform"><ResultTable csvData={csvData} /></TabsContent>
-          </Tabs>
-        </div>} */}
 
         {!csvData && <Examples onCsvData={setCsvData} />}
         
