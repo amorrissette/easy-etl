@@ -19,8 +19,9 @@ Currently built using [Next.js](https://nextjs.org/), [Groq](https://sdk.vercel.
 
 ## To-Do:
 
+- [X] Allow option to load more table entries
+- [X] Add support for xls file import
 - [ ] Save and load previous ETL "policies"
 - [ ] Add more data examples
 - [ ] Prompt tuning and unit testing
-- [ ] Allow option to load more table entries
 - [ ] Formatting and styling updates
