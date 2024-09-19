@@ -215,20 +215,31 @@ export default function ResultTable({ csvData }: DataTableProps) {
       {/* </div> */}
 
       <div className="flex justify-center mt-4 font-mono">
-        <div className="pr-2 pl-2">
+        <div className="pr-2">
           <button 
-            className={`flex items-center justify-center p-3 border border-gray-400 ${headersEdited ? 'bg-green-100' : 'bg-gray-100'} hover:bg-green-200 hover:bg-green-300 rounded`}
+            className={`flex items-center justify-center p-6 border border-gray-400 ${headersEdited ? 'bg-green-100' : 'bg-gray-100'} hover:bg-green-200 rounded`}
             onClick={handleReTransform}
           >
             Re-Transform
           </button>
         </div>
-        <button 
-          className="flex items-center justify-center p-3 border border-gray-300 hover:bg-gray-200 rounded"
-          onClick={saveAsCsv}
-        >
-          Save as CSV
-        </button>
+        <div className="pr-2">
+          <button 
+            className="flex items-center justify-center p-6 border border-gray-400 hover:bg-gray-200 rounded"
+            onClick={saveAsCsv}
+          >
+            Export as CSV
+          </button>
+        </div>
+        <div className="pr-2">
+          <button 
+              className="flex items-center justify-center p-3 border border-gray-400 hover:bg-blue-200 rounded cursor-not-allowed"
+            onClick={saveAsCsv}
+            disabled={true}
+          >
+            Save Transform<br/>(Coming Soon)
+          </button>
+        </div>
       </div>    
     </div>  
   )
