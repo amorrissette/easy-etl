@@ -37,7 +37,7 @@ export default function Home() {
       </p>
 
       {(!csvData && <p className="flex w-full items-center justify-center font-mono text-lg pt-4 pb-2">
-        Import a csv document below and Easy ETL will process it for you.
+        Upload a spreadsheet file below and Easy ETL will process it for you.
       </p>)}
 
       <div className="pt-8">
