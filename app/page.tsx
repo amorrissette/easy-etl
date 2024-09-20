@@ -44,9 +44,9 @@ export default function Home() {
         {!csvData && <Dropzone onCsvData={setCsvData} />}
       </div>
 
-      <div className="w-full items-center justify-center font-mono text-md pt-2 pb-2">
+      {(!csvData && <div className="w-full items-center justify-center font-mono text-md pt-2 pb-2">
         AI inference is currently supported by <a href="https://groq.com/" target="_blank" rel="noopener noreferrer">Groq</a>. Easy ETL and Groq do not store any user data - <a href="https://groq.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Learn more.</a>
-      </div>
+      </div>)}
 
       <div className="w-full pt-8">
         {csvData && <ResultTable csvData={csvData} />}
