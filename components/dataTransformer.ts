@@ -23,7 +23,7 @@ export async function transformData(csvData: string, reqHeaders: string): Promis
       apiKey: process.env.GROQ_API_KEY,
     });
     const result = await generateObject({
-      model: groq('llama-3.1-70b-versatile'), // openai('gpt-4o-mini'),
+      model: groq('llama-3.3-70b-versatile'), // openai('gpt-4o-mini'),
       schema: tableSchema,
       prompt: `Thoroughly analyze the CSV Data included below 
       and determine the most important data transformations to 
